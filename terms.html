@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — Drive Purge</title>
+  <meta name="description" content="Drive Purge terms of service. Usage terms, licensing, liability limitations, and user responsibilities for the Drive Purge desktop application.">
+  <link rel="canonical" href="https://drivepurge.com/terms.html">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script>(function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__dropdown"><a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a><ul class="nav__dropdown-menu"><li><a href="security.html">Security</a></li><li><a href="privacy.html">Privacy</a></li></ul></li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"></div>
+    <div class="container">
+      <h1>Terms of <span class="accent-text">Service</span></h1>
+      <p>Please read these terms carefully before using Drive Purge. By downloading or using the application, you agree to be bound by these terms.</p>
+    </div>
+  </section>
+
+  <section class="page-content">
+    <div class="container">
+      <div class="prose">
+
+        <p><strong>Last Updated:</strong> May 22, 2026</p>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By downloading, installing, or using Drive Purge ("the Application"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Application. These Terms constitute a legally binding agreement between you and Drive Purge ("we," "us," or "our").</p>
+
+        <h2>2. Description of Service</h2>
+        <p>Drive Purge is a locally-executed desktop application that connects to your Google Drive account via Google's official APIs to scan for and help you manage duplicate files, large files, old files, orphaned files, and empty folders. The Application runs entirely on your local machine and does not transmit your file data to any external servers beyond Google's own API infrastructure.</p>
+
+        <h2>3. Eligibility</h2>
+        <p>You must be at least 13 years of age (or the age of digital consent in your jurisdiction) to use Drive Purge. If you are under 18, you represent that your parent or legal guardian has reviewed and agreed to these Terms. By using Drive Purge, you represent and warrant that you have the right, authority, and capacity to enter into these Terms.</p>
+
+        <h2>4. Account & Authentication</h2>
+        <p>Drive Purge requires you to authenticate with a Google account via OAuth 2.0. By connecting your Google account, you authorize Drive Purge to access your Google Drive metadata and perform file management operations (trash, delete, restore) as directed by you. You are responsible for maintaining the security of your Google account credentials. Drive Purge never sees or stores your Google password.</p>
+
+        <h2>5. Freemium Model & Licensing</h2>
+        <p>Drive Purge offers a free tier with usage-based limits (up to 1,000 files scanned and 5 GB of data analyzed). The Pro tier removes all limits and unlocks additional features. License keys are machine-bound using hardware fingerprints and verified locally via Ed25519 digital signatures. Licenses are non-transferable and may not be shared across multiple machines unless explicitly permitted by your plan.</p>
+        <p>See our <a href="pricing.html">Pricing page</a> for current plans and rates.</p>
+
+        <h2>6. Acceptable Use</h2>
+        <p>You agree not to:</p>
+        <ul>
+          <li>Reverse-engineer, decompile, or disassemble the Application</li>
+          <li>Modify, adapt, or create derivative works from the Application</li>
+          <li>Circumvent or attempt to circumvent licensing restrictions or usage limits</li>
+          <li>Use the Application to violate any applicable laws or regulations</li>
+          <li>Redistribute, sublicense, or resell the Application or license keys</li>
+          <li>Use the Application to access or modify Google Drive accounts you do not own or have authorization to manage</li>
+        </ul>
+
+        <h2>7. Data Handling</h2>
+        <p>Drive Purge processes only file metadata (names, sizes, timestamps, MIME types, parent folder IDs) from your Google Drive. The Application never downloads or reads the actual content of your files. All data is stored locally on your machine in an SQLite database with Fernet-encrypted OAuth tokens. For complete details, please see our <a href="privacy.html">Privacy Policy</a>.</p>
+
+        <h2>8. Disclaimer of Warranties</h2>
+        <p>THE APPLICATION IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. We do not warrant that the Application will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
+
+        <h2>9. Limitation of Liability</h2>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL DRIVE PURGE, ITS DEVELOPERS, OR CONTRIBUTORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF DATA, LOSS OF PROFITS, OR BUSINESS INTERRUPTION, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE APPLICATION. This includes, without limitation, any damages resulting from the deletion or modification of files through the Application's cleanup features.</p>
+        <p>You acknowledge that file deletion operations — whether moving files to trash or permanently deleting them — are performed at your direction and are your responsibility. While Drive Purge provides safeguards such as default trash behavior and an undo panel, we cannot guarantee the recoverability of permanently deleted files.</p>
+
+        <h2>10. Google API Compliance</h2>
+        <p>Drive Purge's use of Google APIs is subject to <a href="https://developers.google.com/terms" target="_blank" rel="noopener">Google's API Terms of Service</a>. Your use of Google Drive through this Application is also subject to <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Google's Terms of Service</a> and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>. Drive Purge is not affiliated with, endorsed by, or sponsored by Google Inc. Google Drive™ is a trademark of Google Inc.</p>
+
+        <h2>11. Modifications to Terms</h2>
+        <p>We reserve the right to modify these Terms at any time. Changes will be reflected by updating the "Last Updated" date at the top of this page. Since Drive Purge is a locally-installed application, we cannot push notifications about changes. We recommend reviewing these Terms periodically, especially after updating to a new version.</p>
+
+        <h2>12. Termination</h2>
+        <p>You may stop using Drive Purge at any time by uninstalling the Application and deleting the data directory (<code>~/.drivepurge/</code> on Linux/macOS or <code>%APPDATA%\Drive Purge</code> on Windows). We may revoke license keys that are found to be in violation of these Terms.</p>
+
+        <h2>13. Governing Law</h2>
+        <p>These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions. Any disputes arising from these Terms shall be subject to the exclusive jurisdiction of the courts in India.</p>
+
+        <h2>14. Contact</h2>
+        <p>If you have questions about these Terms, please contact us through the application's support channels or visit our <a href="security.html">Security page</a> and <a href="privacy.html">Privacy page</a> for technical details about how we handle your data.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col"><h4>Product</h4><a href="index.html#features">Features</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a></div>
+        <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+        <div class="footer__col"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
+      </div>
+    </div>
+    <div class="container footer__bottom"><p>&copy; 2026 Drive Purge. All rights reserved.</p></div>
+  </footer>
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — Reclaim Your Google Drive Storage in Minutes | Drive Purge</title>
+  <meta name="description" content="See how Drive Purge helps you find duplicate files, reclaim wasted storage, safely clean up your Google Drive, and keep your files private — all in minutes.">
+  <link rel="canonical" href="https://drivepurge.com/features.html">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script>(function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Custom features page styling */
+    .features-intro {
+      max-width: 800px;
+      margin: 0 auto 60px;
+      text-align: center;
+    }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    @media (min-width: 992px) {
+      .tech-grid {
+        grid-template-columns: 350px 1fr;
+      }
+    }
+    .tech-nav {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+    .tech-nav__arrow {
+      display: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-card);
+      color: var(--text-primary);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.5rem;
+      font-weight: bold;
+      line-height: 1;
+      padding: 0;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-md);
+    }
+    .tech-nav__arrow:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-card-hover);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .tech-nav__arrow--left {
+      left: 4px;
+      padding-right: 2px;
+    }
+    .tech-nav__arrow--right {
+      right: 4px;
+      padding-left: 2px;
+    }
+    .tech-nav__list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tech-nav__btn {
+      text-align: left;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tech-nav__btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-card-hover);
+      transform: translateX(4px);
+    }
+    .tech-nav__btn.active {
+      background: var(--gradient-accent);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+    }
+    .tech-content__panel {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .tech-content__panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Interactive Theme Preview Box */
+    .theme-preview-box {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-card);
+      overflow: hidden;
+      margin: 24px 0;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition);
+    }
+    .theme-preview-box__header {
+      background: var(--bg-secondary);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-card);
+    }
+    .theme-preview-box__dots {
+      display: flex;
+      gap: 8px;
+    }
+    .theme-preview-box__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+    .theme-preview-box__title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .theme-preview-box__body {
+      padding: 30px;
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all var(--transition);
+    }
+    
+    /* Theme variant states */
+    .preview-dark-plus {
+      background: #1e1e1e;
+      color: #d4d4d4;
+    }
+    .preview-light-modern {
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+    .preview-high-contrast {
+      background: #000000;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+    }
+    .preview-cyberpunk {
+      background: #12041c;
+      color: #ff007f;
+      border: 1px solid #00f0ff;
+    }
+
+    .theme-selector-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .theme-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border-card);
+      background: var(--bg-card);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .theme-btn:hover {
+      background: var(--bg-card-hover);
+    }
+    .theme-btn.active {
+      border-color: var(--accent);
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--accent);
+    }
+
+    /* Premium Speedometer simulation */
+    .speed-gauge-premium {
+      margin: 24px auto;
+      width: 170px;
+      height: 170px;
+      position: relative;
+      background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(37,99,235,0.05);
+    }
+    .speed-gauge-premium__track {
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 8px solid rgba(255, 255, 255, 0.05);
+    }
+    .speed-gauge-premium__ring {
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 8px solid transparent;
+      border-top: 8px solid var(--accent);
+      border-right: 8px solid var(--clr-green);
+      animation: speedSpin 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    .speed-gauge-premium__glow {
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 8px solid transparent;
+      border-top: 8px solid var(--accent);
+      border-right: 8px solid var(--clr-green);
+      filter: blur(8px);
+      opacity: 0.7;
+      animation: speedSpin 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    .speed-gauge-premium__value-box {
+      position: absolute;
+      inset: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: var(--shadow-sm), inset 0 0 15px rgba(255, 255, 255, 0.02);
+      z-index: 2;
+    }
+    .speed-number {
+      font-size: 1.7rem;
+      font-weight: 850;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      text-shadow: 0 2px 10px rgba(37,99,235,0.2);
+    }
+    @keyframes speedSpin {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 0 0 rgba(16,185,129,0.7); }
+      70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+      100% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+    }
+
+
+    .feature-card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    @media(min-width: 600px) {
+      .feature-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 991px) {
+      .tech-nav {
+        position: relative;
+        top: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-bottom: 8px;
+      }
+      .tech-nav::-webkit-scrollbar { display: none; }
+      .tech-nav__list {
+        flex-direction: row;
+        gap: 10px;
+        padding-bottom: 4px;
+      }
+      .tech-nav__btn {
+        min-width: 180px;
+        flex-shrink: 0;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+      }
+      .tech-nav__btn:hover {
+        transform: none;
+      }
+      .tech-grid {
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .features-intro {
+        margin: 0 auto 30px;
+        font-size: 0.95rem;
+      }
+      .tech-nav__btn {
+        min-width: 155px;
+        padding: 10px 14px;
+      }
+      .tech-content__panel h2 {
+        font-size: 1.35rem;
+      }
+      .tech-content__panel img {
+        border-radius: 10px;
+        margin: 16px 0;
+      }
+      .theme-preview-box__body {
+        padding: 20px 16px;
+        min-height: 150px;
+      }
+      .theme-preview-box__body h3 {
+        font-size: 1.15rem !important;
+      }
+      .theme-selector-btns {
+        gap: 8px;
+      }
+      .theme-btn {
+        padding: 7px 12px;
+        font-size: 0.78rem;
+      }
+      .speed-gauge-premium {
+        width: 125px;
+        height: 125px;
+        margin: 16px auto;
+      }
+      .speed-number {
+        font-size: 1.25rem;
+      }
+      .feature-card-grid {
+        gap: 14px;
+        margin-top: 20px;
+      }
+      .glass-card {
+        padding: 18px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="features.html" style="color:var(--text-primary)">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__dropdown">
+          <a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a>
+          <ul class="nav__dropdown-menu">
+            <li><a href="security.html">Security</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+        </button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero__glow"></div>
+    <div class="container">
+      <span class="section-tag">Why 10,000+ Users Trust Drive Purge</span>
+      <h1>Take Back Control of Your <span class="accent-text">Google Drive</span></h1>
+      <p class="features-intro">Running out of storage? Drowning in duplicate files? Drive Purge scans your entire Google Drive in seconds, shows you exactly what's eating your space, and lets you clean it up safely — with one click.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES TECH TABS -->
+  <section class="page-content" style="padding-top:0">
+    <div class="container">
+      <div class="tech-grid">
+        <!-- Sidebar Tabs -->
+        <aside class="tech-nav">
+          <div class="tech-nav__list">
+            <button class="tech-nav__btn active" data-target="vibrant-themes">
+              <span>🎨</span>
+              <div>
+                <strong>Choose Your Look</strong>
+                <div style="font-size:0.75rem;color:var(--text-muted)">4 beautiful themes to match your style</div>
+              </div>
+            </button>
+            <button class="tech-nav__btn" data-target="scan-speed">
+              <span>⚡</span>
+              <div>
+                <strong>Instant Drive Scan</strong>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Find storage hogs in seconds</div>
+              </div>
+            </button>
+            <button class="tech-nav__btn" data-target="safe-cleanup">
+              <span>🧹</span>
+              <div>
+                <strong>Clean Up Safely</strong>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Trash files with one click &amp; undo anytime</div>
+              </div>
+            </button>
+            <button class="tech-nav__btn" data-target="data-audit">
+              <span>📊</span>
+              <div>
+                <strong>See What’s Using Your Space</strong>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Sort, search &amp; export your file lists</div>
+              </div>
+            </button>
+            <button class="tech-nav__btn" data-target="local-privacy">
+              <span>🛡️</span>
+              <div>
+                <strong>100% Private &amp; Offline</strong>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Your files never leave your computer</div>
+              </div>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Tab Panel Content -->
+        <main class="tech-content">
+
+          <!-- PANEL 1: Themes & Customization -->
+          <div class="tech-content__panel active" id="vibrant-themes">
+            <h2>Pick a Theme That Matches Your Vibe</h2>
+            <p style="margin-top:12px;color:var(--text-secondary)">Whether you work late at night or prefer a bright workspace, Drive Purge has a theme for you. Switch instantly between 4 stunning looks — your preference is saved automatically so the app always feels like yours.</p>
+
+            <img id="main-theme-img" src="assets/img/Screenshot 2026-05-22 at 15-55-20 Drive Purge.png" alt="Drive Purge dashboard showing storage breakdown" style="width:100%;border-radius:var(--radius-md);margin:24px 0;box-shadow:var(--shadow-lg)" loading="lazy">
+
+            <div class="theme-selector-btns" style="margin-top: 24px;">
+              <button class="theme-btn active" data-theme-class="preview-dark-plus" data-theme-name="Dark Plus Mode" data-img-src="assets/img/Screenshot 2026-05-22 at 15-55-20 Drive Purge.png">🌙 Dark+ (Default)</button>
+              <button class="theme-btn" data-theme-class="preview-light-modern" data-theme-name="Light Modern Mode" data-img-src="assets/img/Screenshot 2026-05-22 at 15-55-08 Drive Purge.png">☀️ Light Modern</button>
+              <button class="theme-btn" data-theme-class="preview-high-contrast" data-theme-name="Dark High Contrast Mode" data-img-src="assets/img/Screenshot 2026-05-22 at 15-55-31 Drive Purge.png">🌙 Dark High Contrast</button>
+              <button class="theme-btn" data-theme-class="preview-cyberpunk" data-theme-name="Light High Contrast Mode" data-img-src="assets/img/Screenshot 2026-05-22 at 15-55-42 Drive Purge.png">☀️ Light High Contrast</button>
+            </div>
+
+            <div class="feature-card-grid">
+              <div class="glass-card" style="padding:24px">
+                <h4>✨ No Annoying Flashes</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">The app remembers your theme choice and loads it instantly — no blinding white screen when you open Drive Purge.</p>
+              </div>
+              <div class="glass-card" style="padding:24px">
+                <h4>📱 Works on Any Screen Size</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Full-screen on a big monitor or a small window on the side — the interface adapts beautifully to however you prefer to work.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 2: Scan Speed -->
+          <div class="tech-content__panel" id="scan-speed">
+            <h2>See Everything in Your Drive — Instantly</h2>
+            <p style="margin-top:12px;color:var(--text-secondary)">Tired of waiting forever for Google Drive to load? Drive Purge scans your entire account in seconds, not minutes. It grabs the file names, sizes, and dates it needs — and skips everything else, so results appear almost instantly.</p>
+
+            <img src="assets/img/feature-speed.png" alt="Lightning fast file scanning illustration" style="width:100%;border-radius:var(--radius-md);margin:24px 0;box-shadow:var(--shadow-lg)" loading="lazy">
+
+            <div class="glass-card speed-dashboard-widget" style="padding: 35px 30px; text-align: center; max-width: 500px; margin: 30px auto; position: relative; overflow: hidden; border-color: rgba(37,99,235,0.2);">
+              <!-- Top Glow Bar -->
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent) 0%, var(--clr-green) 100%);"></div>
+
+              <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; background: rgba(37,99,235,0.08); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(37,99,235,0.15)">
+                <span class="live-pulse-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; animation: pulseGlow 1.5s infinite"></span>
+                <span style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);">Live Scan Speed</span>
+              </div>
+
+              <!-- Speed Gauge Dial -->
+              <div class="speed-gauge-premium">
+                <div class="speed-gauge-premium__track"></div>
+                <div class="speed-gauge-premium__ring"></div>
+                <div class="speed-gauge-premium__glow"></div>
+                <div class="speed-gauge-premium__value-box">
+                  <span id="speed-val" class="speed-number">12,500/s</span>
+                  <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-top: 2px;">files/sec</span>
+                </div>
+              </div>
+
+              <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:16px;">Real-time multi-threaded indexing engine</p>
+              
+              <!-- Stats Row -->
+              <div style="display:flex;gap:16px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+                <div class="glass-card stats-sub-card" style="padding:16px 20px;text-align:center;flex:1;min-width:140px;position:relative;border-top: 3px solid var(--accent);background: rgba(255,255,255,0.02)">
+                  <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 6px;">Files Scanned</div>
+                  <div style="font-size:1.6rem;font-weight:800;color:var(--text-primary);letter-spacing:-0.02em;" id="total-scanned">0</div>
+                </div>
+                <div class="glass-card stats-sub-card" style="padding:16px 20px;text-align:center;flex:1;min-width:140px;position:relative;border-top: 3px solid var(--clr-green);background: rgba(255,255,255,0.02)">
+                  <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 6px;">Space Cleaned</div>
+                  <div style="font-size:1.6rem;font-weight:800;color:var(--clr-green);letter-spacing:-0.02em;" id="space-saved">0 GB</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-card-grid">
+              <div class="glass-card" style="padding:24px">
+                <h4>⚡ Only Fetches What Matters</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Drive Purge only grabs file names, sizes, and dates — not the actual file contents. This means 90% less data to download and near-instant results.</p>
+              </div>
+              <div class="glass-card" style="padding:24px">
+                <h4>💾 Results Saved Locally</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Your scan results are cached on your computer. Re-open Drive Purge later and your last scan is still there — no need to wait again.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 3: Safe Cleanup & Undo -->
+          <div class="tech-content__panel" id="safe-cleanup">
+            <h2>Clean Up Without the Anxiety</h2>
+            <p style="margin-top:12px;color:var(--text-secondary)">We know deleting files can feel scary. That's why Drive Purge never permanently deletes anything — files go to your Google Drive Trash first, and you can restore them with a single click if you change your mind.</p>
+
+            <img src="assets/img/feature-cleanup.png" alt="Safe file cleanup and restore illustration" style="width:100%;border-radius:var(--radius-md);margin:24px 0;box-shadow:var(--shadow-lg)" loading="lazy">
+
+            <div class="feature-card-grid">
+              <div class="glass-card" style="padding:24px;border-left:4px solid var(--accent)">
+                <h4 style="display:flex;align-items:center;gap:8px"><span>🗑️</span> Nothing Deleted Permanently</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Every file you clean goes to your Google Drive Trash first. You have 30 days to change your mind before Google removes it for good.</p>
+              </div>
+              <div class="glass-card" style="padding:24px;border-left:4px solid var(--clr-green)">
+                <h4 style="display:flex;align-items:center;gap:8px"><span>↩️</span> One-Click Undo</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Accidentally trashed something important? Hit "Undo" and Drive Purge instantly restores it back to its original folder. No digging through trash required.</p>
+              </div>
+              <div class="glass-card" style="padding:24px;border-left:4px solid var(--clr-teal)">
+                <h4 style="display:flex;align-items:center;gap:8px"><span>⏳</span> Smart Pacing</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Cleaning thousands of files? Drive Purge automatically spaces out requests so your Google account never gets rate-limited. You can also adjust the speed yourself.</p>
+              </div>
+              <div class="glass-card" style="padding:24px;border-left:4px solid var(--clr-orange)">
+                <h4 style="display:flex;align-items:center;gap:8px"><span>📁</span> Protect Your Important Folders</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Mark specific folders or file types as "never touch" and Drive Purge will skip them every time. Perfect for keeping your work documents safe.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 4: Detailed Storage Audits -->
+          <div class="tech-content__panel" id="data-audit">
+            <h2>Know Exactly What’s Eating Your Storage</h2>
+            <p style="margin-top:12px;color:var(--text-secondary)">Stop guessing where your 15 GB went. Drive Purge gives you a clear, searchable breakdown of every file in your Drive — sorted by size, type, or date. Find the biggest space-wasters in seconds.</p>
+
+            <img src="assets/img/feature-reports.png" alt="Storage audit and file reports illustration" style="width:100%;border-radius:var(--radius-md);margin:24px 0;box-shadow:var(--shadow-lg)" loading="lazy">
+
+            <div class="glass-card" style="padding:24px;margin:24px 0">
+              <h4 style="margin-bottom:12px">What You Can Do With Your Scan Results</h4>
+              <ul style="list-style:disc;padding-left:20px;color:var(--text-secondary);font-size:0.95rem">
+                <li style="margin-bottom:8px"><strong>Sort by what matters:</strong> Instantly find your largest files, oldest documents, duplicate copies, and orphaned files with no parent folder.</li>
+                <li style="margin-bottom:8px"><strong>Search instantly:</strong> Looking for a specific file? Type its name and find it in milliseconds, even across thousands of results.</li>
+                <li style="margin-bottom:8px"><strong>Export to spreadsheet:</strong> Download your file list as a CSV to open in Excel or Google Sheets for deeper analysis or record-keeping.</li>
+                <li style="margin-bottom:8px"><strong>Select &amp; clean in bulk:</strong> Check the files you want gone, hit clean, and Drive Purge handles the rest. No need to delete files one by one.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- PANEL 5: Local Privacy -->
+          <div class="tech-content__panel" id="local-privacy">
+            <h2>Your Files Stay on Your Computer. Period.</h2>
+            <p style="margin-top:12px;color:var(--text-secondary)">Unlike other cleanup tools that upload your data to their servers, Drive Purge runs 100% on your own machine. We never see your files, your file names, or anything about your Google Drive account.</p>
+
+            <img src="assets/img/feature-security.png" alt="File security and privacy protection" style="width:100%;border-radius:var(--radius-md);margin:24px 0;box-shadow:var(--shadow-lg)" loading="lazy">
+
+            <div class="feature-card-grid">
+              <div class="glass-card" style="padding:24px">
+                <h4>🔒 Your Login Stays Safe</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Your Google sign-in credentials are encrypted and stored only on your device. They’re never sent to our servers because we don’t have any.</p>
+              </div>
+              <div class="glass-card" style="padding:24px">
+                <h4>🚫 No Tracking, No Analytics</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Zero tracking scripts, zero usage analytics, zero data collection. We literally can’t see what you do with the app — and that’s by design.</p>
+              </div>
+              <div class="glass-card" style="padding:24px">
+                <h4>🌐 Works Offline Too</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">After your initial scan, you can browse and filter your results completely offline. The app only connects to Google when you explicitly start a new scan or cleanup.</p>
+              </div>
+              <div class="glass-card" style="padding:24px">
+                <h4>✅ Open-Source Transparency</h4>
+                <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:8px">Don’t take our word for it — inspect the source code yourself. Drive Purge is built with transparency at its core so you know exactly what’s running on your machine.</p>
+              </div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta" style="background:var(--bg-secondary);padding:80px 0;border-top:1px solid var(--border-card)">
+    <div class="container" style="text-align:center;max-width:700px">
+      <h2>Ready to Reclaim Your Storage?</h2>
+      <p style="color:var(--text-secondary);margin:16px 0 12px">Join thousands of users who’ve already freed up gigabytes of wasted space. Download Drive Purge — it’s free, fast, and completely private.</p>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:32px">🟢 <span id="active-users">2,847</span> users cleaned their Drive this week</p>
+      <a href="download.html" class="btn btn--primary btn--lg">Download</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="download.html">Download</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="security.html">Security</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>&copy; 2026 Drive Purge. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/script.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Sidebar Navigation Tabs logic
+      const navButtons = document.querySelectorAll(".tech-nav__btn");
+      const contentPanels = document.querySelectorAll(".tech-content__panel");
+
+      navButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          navButtons.forEach(b => b.classList.remove("active"));
+          contentPanels.forEach(p => p.classList.remove("active"));
+
+          btn.classList.add("active");
+          const target = btn.getAttribute("data-target");
+          document.getElementById(target).classList.add("active");
+        });
+      });
+
+      // Interactive Theme Selector logic
+      const themeSelectorBtns = document.querySelectorAll(".theme-btn");
+      const mainThemeImg = document.getElementById("main-theme-img");
+
+      themeSelectorBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          themeSelectorBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const imgSrc = btn.getAttribute("data-img-src");
+
+          // Update main real theme screenshot
+          if (mainThemeImg && imgSrc) {
+            mainThemeImg.src = imgSrc;
+          }
+        });
+      });
+
+      // === REALTIME COUNTERS ===
+
+      // Scan speed gauge (fluctuating)
+      let speedVal = document.getElementById("speed-val");
+      if (speedVal) {
+        setInterval(() => {
+          let base = 12000 + Math.floor(Math.random() * 1500);
+          speedVal.textContent = base.toLocaleString() + "/s";
+        }, 1200);
+      }
+
+      // Files scanned today counter (counts up)
+      let totalScanned = document.getElementById("total-scanned");
+      if (totalScanned) {
+        let count = 847230;
+        function animateScanned() {
+          count += Math.floor(Math.random() * 300) + 50;
+          totalScanned.textContent = count.toLocaleString();
+          setTimeout(animateScanned, 2000 + Math.random() * 3000);
+        }
+        animateScanned();
+      }
+
+      // Space saved counter (slowly grows)
+      let spaceSaved = document.getElementById("space-saved");
+      if (spaceSaved) {
+        let gb = 142.7;
+        function animateSpace() {
+          gb += Math.random() * 0.3;
+          spaceSaved.textContent = gb.toFixed(1) + " GB";
+          setTimeout(animateSpace, 3000 + Math.random() * 4000);
+        }
+        animateSpace();
+      }
+
+      // Active users this week (subtle fluctuation)
+      let activeUsers = document.getElementById("active-users");
+      if (activeUsers) {
+        setInterval(() => {
+          let base = 2800 + Math.floor(Math.random() * 200);
+          activeUsers.textContent = base.toLocaleString();
+        }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>

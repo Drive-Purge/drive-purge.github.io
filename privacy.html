@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Drive Purge</title>
+  <meta name="description" content="Drive Purge privacy policy. Learn exactly what data we collect, how it's stored, and why we chose a local-first architecture that keeps your files private.">
+  <link rel="canonical" href="https://drivepurge.com/privacy.html">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script>(function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__dropdown"><a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a><ul class="nav__dropdown-menu"><li><a href="security.html">Security</a></li><li><a href="privacy.html" style="color:var(--text-primary)">Privacy</a></li></ul></li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"></div>
+    <div class="container">
+      <h1>Privacy <span class="accent-text">Policy</span></h1>
+      <p>We believe your files are your business. Here's exactly what Drive Purge does and doesn't do with your data.</p>
+    </div>
+  </section>
+
+  <section class="page-content">
+    <div class="container">
+      <div class="prose">
+
+        <p><strong>Last Updated:</strong> May 21, 2026</p>
+
+        <h2>Our Privacy Commitment</h2>
+        <p>Drive Purge is built on a fundamental belief: your Google Drive data belongs to you, and only you. Unlike many cloud-based productivity tools that process your data on remote servers, Drive Purge is a <strong>locally-executed desktop application</strong>. Every scan, every analysis, every deletion operation happens entirely on your computer. We have no servers that see your files, no databases that store your file names, and no analytics that track what you clean. This is not just a policy — it is a technical architecture decision that makes it physically impossible for us to access your data.</p>
+        <p>This privacy policy explains in plain language what information Drive Purge accesses, how it is stored, the network connections the application makes, and your rights as a user. We believe in radical transparency when it comes to data handling, especially for a tool that interacts with something as personal as your file storage.</p>
+
+        <h2>What Data Does Drive Purge Access?</h2>
+        <p>When you connect your Google account to Drive Purge, the application requests the following OAuth scopes:</p>
+        <ul>
+          <li><strong><code>https://www.googleapis.com/auth/drive</code></strong> — Full access to your Google Drive. This scope is necessary because Drive Purge needs to both read file metadata (for scanning) and modify file states (for trashing, deleting, and restoring files). We use the full drive scope rather than a read-only scope specifically to enable cleanup operations.</li>
+          <li><strong><code>openid</code></strong> — Standard OpenID Connect scope for authentication verification.</li>
+          <li><strong><code>https://www.googleapis.com/auth/userinfo.email</code></strong> — Access to your email address. This is used solely to identify which Google account is connected in the application's UI and to associate scan results with the correct account.</li>
+          <li><strong><code>https://www.googleapis.com/auth/userinfo.profile</code></strong> — Access to your basic profile information (name and profile picture). This is used for display purposes in the application's account section.</li>
+        </ul>
+        <p>During a scan, Drive Purge retrieves <strong>file metadata only</strong> from the Google Drive API. The specific fields requested are: file ID, name, MIME type, size, created time, modified time, parent folder IDs, web view link, trashed status, ownership status, and sharing status. <strong>Drive Purge never downloads or reads the actual content of your files.</strong> The application has no interest in what your documents contain — it only needs metadata to identify duplicates, calculate sizes, determine modification dates, and check parent folder existence.</p>
+
+        <h2>Where Is Data Stored?</h2>
+        <p>All data generated by Drive Purge is stored in a single directory on your local filesystem:</p>
+        <ul>
+          <li><strong>Linux / macOS:</strong> <code>~/.drivepurge/</code></li>
+          <li><strong>Windows:</strong> <code>%APPDATA%\Drive Purge\</code></li>
+        </ul>
+        <p>This directory contains the following files:</p>
+        <ul>
+          <li><strong><code>drivepurge.db</code></strong> — An SQLite database containing your encrypted OAuth tokens, scan history (scan IDs, timestamps, file counts), flagged file records (file IDs, names, sizes, flag reasons), application configuration (scan settings, UI preferences), usage counters for freemium limits, and license information.</li>
+          <li><strong><code>secret.key</code></strong> — The Fernet encryption key used to encrypt and decrypt OAuth tokens stored in the database. This file is restricted to owner read/write only (chmod 600) on Unix systems.</li>
+          <li><strong><code>logs/drivepurge.log</code></strong> — Application logs containing timestamps, log levels, and operational messages. Logs are rotated automatically at 5 MB with up to 3 backup files retained. Logs may contain file IDs and error messages but never contain file content, OAuth tokens, or other sensitive credentials.</li>
+        </ul>
+        <p><strong>No data is stored anywhere else.</strong> There are no cloud backups, no remote databases, no synchronized storage. If you delete the <code>~/.drivepurge/</code> directory, all Drive Purge data is permanently erased from your system. You will need to re-authenticate and reconfigure the application, but no historical data will exist anywhere.</p>
+
+        <h2>What Network Connections Does Drive Purge Make?</h2>
+        <p>Drive Purge makes exactly three types of network connections, all of which are directed at Google's own infrastructure:</p>
+        <ol>
+          <li><strong>Google OAuth Authorization</strong> — When you click "Connect," your system browser opens <code>https://accounts.google.com/o/oauth2/auth</code> to authenticate. After authorization, Google redirects back to <code>http://127.0.0.1:7823/auth/callback</code> (your local machine). The token exchange request is sent to <code>https://oauth2.googleapis.com/token</code>.</li>
+          <li><strong>Google Drive API</strong> — During scanning, the application makes paginated requests to <code>https://www.googleapis.com/drive/v3/files</code> to retrieve file metadata. During cleanup, it calls <code>files.update</code> (to trash/restore) and <code>files.delete</code> (to permanently delete) endpoints. During token refresh, it contacts <code>https://oauth2.googleapis.com/token</code>.</li>
+          <li><strong>Google UserInfo API</strong> — After successful authentication, a single request is made to <code>https://www.googleapis.com/oauth2/v2/userinfo</code> to retrieve your email address and profile information for display in the application.</li>
+        </ol>
+        <p><strong>Drive Purge makes no other network connections.</strong> There are no analytics services (no Google Analytics, no Mixpanel, no Amplitude), no crash reporting services (no Sentry, no Bugsnag), no update checking services, and no telemetry endpoints. The local FastAPI server binds exclusively to <code>127.0.0.1</code> (localhost), meaning it is not accessible from other devices on your network.</p>
+
+        <h2>What We Don't Collect</h2>
+        <p>To be explicitly clear about what Drive Purge does <strong>not</strong> do:</p>
+        <ul>
+          <li>We do not collect, transmit, or store any usage analytics or telemetry</li>
+          <li>We do not read, download, or cache the content of any files in your Google Drive</li>
+          <li>We do not share any data with third parties, advertisers, or data brokers</li>
+          <li>We do not track your scanning patterns, cleanup decisions, or usage frequency</li>
+          <li>We do not store your Google password — authentication is handled entirely by Google's OAuth service</li>
+          <li>We do not maintain any server-side database of user accounts, emails, or activity logs</li>
+          <li>We do not use cookies, tracking pixels, or any form of cross-site tracking</li>
+          <li>We do not phone home for license validation — license verification is performed locally using Ed25519 signature verification with an embedded public key</li>
+        </ul>
+
+        <h2>Token Revocation & Data Deletion</h2>
+        <p>You can disconnect your Google account from Drive Purge at any time through the application's settings. When you disconnect, Drive Purge performs the following steps:</p>
+        <ol>
+          <li>Sends a revocation request to <code>https://oauth2.googleapis.com/revoke</code> to invalidate the access token at Google's end</li>
+          <li>Deletes all stored OAuth tokens from the local SQLite database</li>
+          <li>The application returns to the unauthenticated state</li>
+        </ol>
+        <p>You can also revoke Drive Purge's access from Google's side by visiting <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a> and removing "Drive Purge" from the list of authorized applications. This immediately invalidates all tokens regardless of what is stored locally.</p>
+        <p>To completely remove all Drive Purge data from your system, simply delete the data directory (<code>rm -rf ~/.drivepurge</code> on Linux/macOS, or delete <code>%APPDATA%\Drive Purge</code> on Windows) and uninstall the application. No residual data remains.</p>
+
+        <h2>Children's Privacy</h2>
+        <p>Drive Purge is a productivity tool intended for use by adults and professionals. We do not knowingly target or collect information from children under the age of 13 (or the applicable age of digital consent in your jurisdiction). Since Drive Purge does not collect any personal information beyond what is stored locally on the user's own device, there is no mechanism through which children's data could be transmitted to or processed by us.</p>
+
+        <h2>Third-Party Services</h2>
+        <p>The only third-party service Drive Purge interacts with is <strong>Google</strong>, specifically through the Google Drive API, Google OAuth 2.0, and the Google UserInfo API. Your use of these Google services is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Google's Terms of Service</a>. We encourage you to review Google's policies to understand how Google processes data when you authorize third-party applications.</p>
+
+        <h2>Changes to This Policy</h2>
+        <p>If we make material changes to this privacy policy, we will update the "Last Updated" date at the top of this page and include a changelog noting what changed and why. Since Drive Purge is a locally-installed application without a central server, we cannot push notifications about policy changes. We recommend checking this page periodically, especially after updating to a new version of the application.</p>
+
+        <h2>Contact</h2>
+        <p>If you have questions about this privacy policy, our data practices, or Drive Purge's security architecture, please contact us through the application's support channels or visit our <a href="security.html">Security page</a> for technical details about our encryption and authentication implementations.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col"><h4>Product</h4><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a></div>
+        <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+        <div class="footer__col"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
+      </div>
+    </div>
+    <div class="container footer__bottom"><p>&copy; 2026 Drive Purge. All rights reserved.</p></div>
+  </footer>
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>

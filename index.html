@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drive Purge — Reclaim Your Google Drive Storage</title>
+  <meta name="description" content="Drive Purge intelligently scans your Google Drive to find duplicates, large files, orphans, and clutter. Reclaim gigabytes of storage in minutes.">
+  <link rel="canonical" href="https://drivepurge.com/">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Drive Purge — Reclaim Your Google Drive Storage">
+  <meta property="og:description" content="Intelligently scan your Google Drive to find duplicates, large files, orphans, and clutter. Reclaim gigabytes of storage in minutes.">
+  <meta property="og:image" content="assets/logo.jpeg">
+  <meta property="og:url" content="https://drivepurge.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Drive Purge — Reclaim Your Google Drive Storage">
+  <meta name="twitter:description" content="Intelligently scan your Google Drive to find duplicates, large files, orphans, and clutter.">
+  <!-- Theme init (prevents FOUC) -->
+  <script>
+    (function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Drive Purge",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Linux, macOS, Windows",
+    "description": "Intelligently scan your Google Drive to find duplicates, large files, orphans, and clutter. Reclaim gigabytes of storage.",
+    "offers": [
+      {"@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free"},
+      {"@type": "Offer", "price": "9", "priceCurrency": "USD", "name": "Pro"}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Is my data safe with Drive Purge?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. Drive Purge runs entirely on your local machine. We use OAuth 2.0 for authentication and all tokens are encrypted at rest using Fernet encryption."}},
+      {"@type": "Question", "name": "Can I undo a deletion?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Files are moved to your Google Drive Trash by default, so you can restore them at any time."}},
+      {"@type": "Question", "name": "Does it work with Google Workspace accounts?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, Drive Purge fully supports Google Workspace (business) accounts."}},
+      {"@type": "Question", "name": "What platforms are supported?", "acceptedAnswer": {"@type": "Answer", "text": "Drive Purge runs on Linux (AppImage), macOS (.app), and Windows (.exe)."}},
+      {"@type": "Question", "name": "Why does the scan take a while?", "acceptedAnswer": {"@type": "Answer", "text": "Google Drive API has rate limits (1,000 queries per 100 seconds). Drive Purge respects these limits with configurable request delays."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__dropdown">
+          <a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a>
+          <ul class="nav__dropdown-menu">
+            <li><a href="security.html">Security</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+        </button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero__bg-glow"></div>
+    <div class="hero__bg-glow hero__bg-glow--2"></div>
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <div class="hero__badge">🚀 The intelligent Drive cleanup tool</div>
+        <h1 class="hero__title">Reclaim Your <span class="accent-text">Google Drive</span> Storage</h1>
+        <p class="hero__subtitle">Drive Purge intelligently scans your entire Google Drive to detect duplicates, oversized files, orphaned items, and empty folders — then helps you safely clean them in one click locally.</p>
+        <div class="hero__cta">
+          <a href="#cta" class="btn btn--primary btn--lg">Start Free Scan</a>
+          <a href="#how-it-works" class="btn btn--ghost btn--lg">See How It Works</a>
+        </div>
+        <div class="hero__trust">
+          <div class="hero__trust-avatars">
+            <div class="avatar" style="--hue:200">A</div>
+            <div class="avatar" style="--hue:140">M</div>
+            <div class="avatar" style="--hue:280">S</div>
+            <div class="avatar" style="--hue:30">R</div>
+          </div>
+          <span class="hero__trust-text">Join professionals saving storage every day</span>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="glass-card hero__mockup">
+          <div class="mockup__header">
+            <span class="mockup__dot mockup__dot--r"></span>
+            <span class="mockup__dot mockup__dot--y"></span>
+            <span class="mockup__dot mockup__dot--g"></span>
+            <span class="mockup__title">Drive Purge — Scan Results</span>
+          </div>
+          <div class="mockup__body" style="padding:0">
+            <div class="video-container" data-lightbox="hero-vid" data-src="assets/vids/scan-intro.mp4" data-caption="Drive Purge — Scan Results Demo">
+              <video autoplay loop muted playsinline preload="auto" aria-label="Drive Purge application demo showing scan results and file analysis interface" style="width:100%;height:auto;display:block;border-radius:0 0 var(--radius-xl) var(--radius-xl)">
+                <source src="assets/vids/scan-intro.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="media-overlay">
+                <div class="media-overlay__icon media-overlay__icon--play">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS BANNER -->
+  <section class="stats" id="stats">
+    <div class="container stats__inner">
+      <div class="stat-item">
+        <span class="stat-item__num" data-count="10000">0</span><span class="stat-item__plus">+</span>
+        <span class="stat-item__label">Users Goal</span>
+        <button class="stat-info-btn" aria-label="Info">ⓘ</button>
+        <span class="stat-info-tooltip">This is our target milestone</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num" data-count="50">0</span><span class="stat-item__plus">TB</span>
+        <span class="stat-item__label">Storage Recovery Goal</span>
+        <button class="stat-info-btn" aria-label="Info">ⓘ</button>
+        <span class="stat-info-tooltip">This is our target milestone</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num" data-count="5">0</span><span class="stat-item__plus">M+</span>
+        <span class="stat-item__label">Files Analysis Goal</span>
+        <button class="stat-info-btn" aria-label="Info">ⓘ</button>
+        <span class="stat-info-tooltip">This is our target milestone</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num" data-count="99">0</span><span class="stat-item__plus">%</span>
+        <span class="stat-item__label">Satisfaction Rate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+
+  <!-- THEME SHOWCASE -->
+  <section class="themes" id="themes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Themes</span>
+        <h2 class="section-title">Four Built-in <span class="accent-text">Themes</span></h2>
+        <p class="section-subtitle">Choose the look that fits your workflow — from minimal light to high-contrast dark.</p>
+      </div>
+      <div class="themes__grid">
+        <div class="theme-card glass-card">
+          <div class="theme-card__media" data-lightbox="themes" data-src="assets/img/Screenshot 2026-05-22 at 15-55-08 Drive Purge.png" data-caption="Light Modern Theme">
+            <img src="assets/img/Screenshot 2026-05-22 at 15-55-08 Drive Purge.png" alt="Drive Purge Light Theme" loading="lazy" width="600" height="400">
+            <div class="media-overlay">
+              <div class="media-overlay__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              </div>
+            </div>
+          </div>
+          <h3>Light Modern</h3>
+        </div>
+        <div class="theme-card glass-card">
+          <div class="theme-card__media" data-lightbox="themes" data-src="assets/img/Screenshot 2026-05-22 at 15-55-20 Drive Purge.png" data-caption="Dark+ Theme">
+            <img src="assets/img/Screenshot 2026-05-22 at 15-55-20 Drive Purge.png" alt="Drive Purge Dark+ Theme" loading="lazy" width="600" height="400">
+            <div class="media-overlay">
+              <div class="media-overlay__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              </div>
+            </div>
+          </div>
+          <h3>Dark+</h3>
+        </div>
+        <div class="theme-card glass-card">
+          <div class="theme-card__media" data-lightbox="themes" data-src="assets/img/Screenshot 2026-05-22 at 15-55-31 Drive Purge.png" data-caption="High Contrast Dark Theme">
+            <img src="assets/img/Screenshot 2026-05-22 at 15-55-31 Drive Purge.png" alt="Drive Purge High Contrast Dark Theme" loading="lazy" width="600" height="400">
+            <div class="media-overlay">
+              <div class="media-overlay__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              </div>
+            </div>
+          </div>
+          <h3>High Contrast Dark</h3>
+        </div>
+        <div class="theme-card glass-card">
+          <div class="theme-card__media" data-lightbox="themes" data-src="assets/img/Screenshot 2026-05-22 at 15-55-42 Drive Purge.png" data-caption="High Contrast Light Theme">
+            <img src="assets/img/Screenshot 2026-05-22 at 15-55-42 Drive Purge.png" alt="Drive Purge High Contrast Light Theme" loading="lazy" width="600" height="400">
+            <div class="media-overlay">
+              <div class="media-overlay__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              </div>
+            </div>
+          </div>
+          <h3>High Contrast Light</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How It Works</span>
+        <h2 class="section-title">Three Steps to a <span class="accent-text">Cleaner Drive</span></h2>
+        <p class="section-subtitle">From connection to cleanup in under five minutes.</p>
+      </div>
+      <div class="how__steps">
+        <div class="how__step glass-card">
+          <div class="how__step-num">01</div>
+          <h3>Connect</h3>
+          <p>Sign in with Google OAuth. We request read-only access by default — your data stays yours.</p>
+        </div>
+        <div class="how__connector"><svg viewBox="0 0 60 24"><path d="M0 12h50m-8-6l8 6-8 6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+        <div class="how__step glass-card">
+          <div class="how__step-num">02</div>
+          <h3>Scan</h3>
+          <p>Choose your scan modes and thresholds. Drive Purge analyzes every file in real-time with progress updates.</p>
+        </div>
+        <div class="how__connector"><svg viewBox="0 0 60 24"><path d="M0 12h50m-8-6l8 6-8 6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+        <div class="how__step glass-card">
+          <div class="how__step-num">03</div>
+          <h3>Clean</h3>
+          <p>Review flagged files, trash or permanently delete with one click. Undo anytime from the restore panel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Testimonials</span>
+        <h2 class="section-title">What Users <span class="accent-text">Say</span></h2>
+      </div>
+      <div class="testimonials__grid">
+        <div class="testimonial-card glass-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p>"Drive Purge found 6 GB of duplicates I didn't even know I had. Scan took under 3 minutes. Absolutely essential tool."</p>
+          <div class="testimonial-card__author"><div class="avatar" style="--hue:200">JD</div><div><strong>James D.</strong><span>Product Manager</span></div></div>
+        </div>
+        <div class="testimonial-card glass-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p>"The orphan detection is genius. Found hundreds of files from deleted shared folders just sitting there consuming quota."</p>
+          <div class="testimonial-card__author"><div class="avatar" style="--hue:320">SK</div><div><strong>Sarah K.</strong><span>Software Engineer</span></div></div>
+        </div>
+        <div class="testimonial-card glass-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p>"Privacy-first approach sealed the deal. Everything runs locally, tokens are encrypted. Finally a cleanup tool I trust."</p>
+          <div class="testimonial-card__author"><div class="avatar" style="--hue:140">MP</div><div><strong>Michael P.</strong><span>IT Director</span></div></div>
+        </div>
+      </div>
+      <p class="testimonials__disclaimer">* Example feedback — representative of the experience we aim to deliver.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Frequently Asked <span class="accent-text">Questions</span></h2>
+      </div>
+      <div class="faq__list">
+        <details class="faq__item glass-card">
+          <summary>Is my data safe with Drive Purge?</summary>
+          <p>Absolutely. Drive Purge runs entirely on your local machine. We use OAuth 2.0 for authentication and all tokens are encrypted at rest using Fernet encryption. No file content is ever sent to external servers — only Google's official Drive API is contacted.</p>
+        </details>
+        <details class="faq__item glass-card">
+          <summary>Can I undo a deletion?</summary>
+          <p>Yes. Files are moved to your Google Drive Trash by default, so you can restore them at any time. Drive Purge also includes a built-in Restore panel for quick undo operations.</p>
+        </details>
+        <details class="faq__item glass-card">
+          <summary>Does it work with Google Workspace accounts?</summary>
+          <p>Yes, Drive Purge fully supports Google Workspace (business) accounts, provided your admin has authorized the Google Drive API for your organization.</p>
+        </details>
+        <details class="faq__item glass-card">
+          <summary>What platforms are supported?</summary>
+          <p>Drive Purge runs on Linux (AppImage), macOS (.app), and Windows (.exe). It requires an internet connection for Google Drive API access.</p>
+        </details>
+        <details class="faq__item glass-card">
+          <summary>Why does the scan take a while?</summary>
+          <p>Google Drive API has rate limits (1,000 queries per 100 seconds). Drive Purge respects these limits with configurable request delays to prevent quota exhaustion while maximizing throughput.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta">
+    <div class="container cta__inner">
+      <div class="cta__glow"></div>
+      <h2 class="cta__title">Ready to Reclaim Your Storage?</h2>
+      <p class="cta__subtitle">Start your free scan today. No credit card required.</p>
+      <div class="cta__actions">
+        <a href="download.html" class="btn btn--primary btn--lg">Download Drive Purge</a>
+        <a href="features.html" class="btn btn--ghost btn--lg">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool. Reclaim storage, eliminate clutter.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col"><h4>Product</h4><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a></div>
+        <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+        <div class="footer__col"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>&copy; 2026 Drive Purge. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="dp-lightbox" class="dp-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Media Viewer">
+    <div class="dp-lightbox__backdrop"></div>
+    <div class="dp-lightbox__container">
+      <div class="dp-lightbox__controls">
+        <button class="dp-lightbox__zoom-in" aria-label="Zoom In">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+        </button>
+        <button class="dp-lightbox__zoom-out" aria-label="Zoom Out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+        </button>
+        <button class="dp-lightbox__close" aria-label="Close viewer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <button class="dp-lightbox__nav dp-lightbox__nav--prev" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <button class="dp-lightbox__nav dp-lightbox__nav--next" aria-label="Next image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="dp-lightbox__content"></div>
+      <div class="dp-lightbox__caption"></div>
+    </div>
+  </div>
+
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>

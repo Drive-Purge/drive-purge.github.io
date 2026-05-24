@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Architecture — Drive Purge</title>
+  <meta name="description" content="Technical breakdown of Drive Purge's security architecture. Learn about local-first design, Fernet encryption, local SQLite WAL database, and offline Ed25519 cryptographic licensing.">
+  <link rel="canonical" href="https://drivepurge.com/security.html">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script>(function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__dropdown"><a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a><ul class="nav__dropdown-menu"><li><a href="security.html" style="color:var(--text-primary)">Security</a></li><li><a href="privacy.html">Privacy</a></li></ul></li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"></div>
+    <div class="container">
+      <h1>Security <span class="accent-text">Architecture</span></h1>
+      <p>A zero-compromise, local-first design. Read the exact technical implementation details of how we protect your Google Drive credentials and files.</p>
+    </div>
+  </section>
+
+  <section class="page-content">
+    <div class="container">
+      <div class="prose">
+
+        <p><strong>Last Updated:</strong> May 22, 2026</p>
+
+        <h2>Security-First Principles</h2>
+        <p>Drive Purge was designed from day one as a zero-trust productivity app. Many storage cleaners upload file indexes, logs, and account tokens to their remote servers to process them. This exposes your Google Drive metadata to third-party databases, leaks credentials, and puts your business files at risk of security breaches. </p>
+        <p>Drive Purge adopts a strict **local-first architecture**. Every single code segment, database transaction, indexer scan, and cryptographic verification runs completely on your machine. Our code connects exclusively to your local loopback address (<code>127.0.0.1</code>) and directly to Google's official endpoints. We maintain zero remote application databases and gather no diagnostic telemetry.</p>
+
+        <hr style="margin: 40px 0; border: none; border-top: 1px solid var(--border-card);">
+
+        <h2>1. Local Loopback & Loop Network Isolation</h2>
+        <p>Drive Purge hosts a high-performance **FastAPI desktop backend** compiled directly into a native executable. To prevent remote network exploitation, the application's network layers are isolated:</p>
+        <ul>
+          <li><strong>Local Loopback Binding</strong>: The application server binds exclusively to the local loopback port <code>127.0.0.1:7823</code>. It is physically impossible to access the application server from other computers, local Wi-Fi, or public subnets.</li>
+          <li><strong>Zero Telemetry Outbound</strong>: Drive Purge has no analytics tracking, no error reporters (no Sentry, Mixpanel, or Amplitude), and no telemetry scripts. Outbound requests are limited only to Google API endpoints.</li>
+        </ul>
+
+        <h2>2. Cryptographic Storage & Database Security</h2>
+        <p>All database transactions are handled locally via an SQLite engine running in high-performance Write-Ahead Logging (**WAL**) mode (<code>PRAGMA journal_mode=WAL</code>). Because standard SQLite databases store values in plaintext, we enforce **Fernet Application-Layer Encryption** on all sensitive credential fields.</p>
+        
+        <div style="background: rgba(37, 99, 235, 0.04); border: 1px solid rgba(37, 99, 235, 0.15); padding: 20px; border-radius: var(--radius-md); margin: 24px 0;">
+          <h4 style="color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            <span>🛡️</span> Application-Layer Credential Encryption Flow
+          </h4>
+          <p style="font-size: 0.9rem; margin: 0; line-height: 1.6;">
+            Before writing to the local <code>drivepurge.db</code> file, the application takes sensitive fields like <code>access_token</code> and <code>refresh_token</code>, encrypts them using <strong>Fernet AES-128 symmetric key encryption in CBC mode</strong>, and base64-encodes the ciphertext. The SQLite file itself is stored in the user's home folder and is completely unreadable without the cryptographic key.
+          </p>
+        </div>
+
+        <h3>The Key-Lock Lifecycle</h3>
+        <ul>
+          <li><strong>Key Location</strong>: The encryption key is stored at <code>~/.drivepurge/secret.key</code> (Linux/macOS) or <code>%APPDATA%\Drive Purge\secret.key</code> (Windows).</li>
+          <li><strong>Unix Permission Hardening</strong>: On Linux and macOS systems, the application sets strict POSIX permissions (<code>chmod 600</code>), meaning only the currently logged-in desktop user has read/write privileges.</li>
+          <li><strong>Disaster Recovery</strong>: If the key file is lost or deleted, the encrypted columns are rendered unreadable. In this scenario, no file data is ever lost; the user simply re-authenticates to acquire a fresh set of tokens.</li>
+        </ul>
+
+        <h2>3. Google OAuth 2.0 & Token Revocation</h2>
+        <p>Drive Purge never asks for, sees, or handles your Google account password. All authentication is managed via Google’s OAuth 2.0 flow:</p>
+        <ol>
+          <li>The application triggers your system's default browser to open Google's official authorization servers (<code>https://accounts.google.com/o/oauth2/auth</code>).</li>
+          <li>Upon approval, Google redirects the session with an authorization code back to your local machine: <code>http://127.0.0.1:7823/auth/callback</code>.</li>
+          <li>The desktop client performs the final secure token exchange at <code>https://oauth2.googleapis.com/token</code> and stores the credentials using Fernet encryption.</li>
+        </ol>
+        <p><strong>Instant Token Evacuation</strong>: When you click "Disconnect" in the settings panel, Drive Purge instantly sends a revocation request to Google’s servers (<code>https://oauth2.googleapis.com/revoke</code>) and permanently wipes all encrypted credential tokens from the local SQLite database.</p>
+
+        <h2>4. Data Isolation & File Safety</h2>
+        <p>Drive Purge interacts with your files via the official Google Drive v3 REST API. We implement multi-layered safety mechanisms to protect your cloud storage:</p>
+        <ul>
+          <li><strong>Metadata-Only Retrieval</strong>: During scans, Drive Purge only queries metadata fields (like <code>id</code>, <code>name</code>, <code>mimeType</code>, <code>size</code>, <code>createdTime</code>, <code>modifiedTime</code>). <strong>The actual contents of your documents are never scanned, downloaded, read, or cached.</strong></li>
+          <li><strong>Safe Trashing & Restore</strong>: Standard cleanup operations send files to your official Google Drive Trash folder (<code>trashed: true</code>) rather than permanently deleting them. This gives you a 30-day window to change your mind and allows for our <strong>One-Click Undo</strong> restore functionality (<code>trashed: false</code>).</li>
+          <li><strong>Smart API Pacing</strong>: To avoid account restrictions, our scanning engine integrates a customizable rate-limit spacer (defaulting to <code>50ms</code> delay per request) and includes dynamic exponential backoff retries to handle Google API <code>429 (Rate Limit Exceeded)</code> statuses automatically.</li>
+        </ul>
+
+        <h2>5. Offline Cryptographic licensing</h2>
+        <p>To enforce privacy, Drive Purge is one of the few SaaS products that **does not phone home to verify your Pro license**. We use public-key cryptography to perform local licensing validation.</p>
+        
+        <div class="glass-card" style="padding: 24px; margin: 30px auto; border-top: 3px solid var(--accent); background: rgba(255, 255, 255, 0.01);">
+          <h4 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🔑 Offline Ed25519 Signature Verification</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+            When you load a license file, the application parses the JSON payload and verifies its authenticity locally using the <strong>Ed25519 public-key signature scheme</strong> (via Python's <code>pynacl</code> library). It re-serializes the payload and validates the cryptographic signature against our embedded hardcoded public key:
+            <code style="display: block; background: rgba(0, 0, 0, 0.2); padding: 8px 12px; border-radius: 4px; margin-top: 10px; font-family: monospace; font-size: 0.8rem; border: 1px solid var(--border-card); overflow-x: auto; color: var(--accent);">9xI8PCMOUeOsQeVsA38xrSSzXwL7SD0JVZPflODnkmU=</code>
+          </p>
+        </div>
+
+        <h3>Stable Machine Fingerprint Lock</h3>
+        <p>To prevent commercial license sharing, licenses are locked to your machine. Drive Purge generates a stable, privacy-compliant hardware fingerprint using a SHA-256 hash of your hardware components:</p>
+        <pre style="background: rgba(0, 0, 0, 0.2); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-card); overflow-x: auto; font-size: 0.85rem;"><code style="color: var(--text-primary); font-family: monospace;">Fingerprint = SHA256(CPU Processor + MAC Address/Node + OS Platform + CPU Arch + OS Release + Hostname)[:16]</code></pre>
+        <p>The application only checks this fingerprint locally; it is never shared, sent, or uploaded to our servers, ensuring your hardware identity remains completely private.</p>
+
+        <hr style="margin: 40px 0; border: none; border-top: 1px solid var(--border-card);">
+
+        <h2>Security FAQ</h2>
+        
+        <h4>Does anyone else have access to my Google Drive?</h4>
+        <p>No. Every transaction goes strictly between your local desktop computer and Google's servers. No third parties (including us) have access to your OAuth tokens, database, or scanning logs.</p>
+
+        <h4>Can Drive Purge delete files without my permission?</h4>
+        <p>No. Drive Purge operates exclusively as a search and flag engine first. Deletions and trash movements are only executed when you explicitly select items and click the "Trash" or "Delete" buttons in the UI.</p>
+
+        <h4>What happens if my database file gets stolen?</h4>
+        <p>The SQLite database file `drivepurge.db` contains your OAuth access and refresh tokens. However, these are thoroughly encrypted with AES-128 via Fernet. An attacker would need access to your home directory key file (`secret.key`) to decipher them. If you suspect an intrusion, simply visit <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account Permissions</a> and revoke "Drive Purge" to immediately kill all active credentials.</p>
+
+        <h4>How does the local license check work without internet?</h4>
+        <p>Your license file contains an Ed25519 digital signature signed by our master private key. The application uses our hardcoded public key to mathematically verify that the license was issued by us and matches your machine fingerprint. Because this verification is purely mathematical, it requires zero active network connections.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col"><h4>Product</h4><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a></div>
+        <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+        <div class="footer__col"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
+      </div>
+    </div>
+    <div class="container footer__bottom"><p>&copy; 2026 Drive Purge. All rights reserved.</p></div>
+  </footer>
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>

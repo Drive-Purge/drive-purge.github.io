@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Drive Purge — Our Mission & Story</title>
+  <meta name="description" content="Learn about Drive Purge, the intelligent Google Drive cleanup tool. Our mission, team philosophy, technical architecture, and commitment to user privacy.">
+  <link rel="canonical" href="https://drivepurge.com/about.html">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script>(function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html" style="color:var(--text-primary)">About</a></li>
+        <li class="nav__dropdown"><a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a><ul class="nav__dropdown-menu"><li><a href="security.html">Security</a></li><li><a href="privacy.html">Privacy</a></li></ul></li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"></div>
+    <div class="container">
+      <h1>About <span class="accent-text">Drive Purge</span></h1>
+      <p>The story behind the intelligent Google Drive cleanup tool trusted by professionals worldwide.</p>
+    </div>
+  </section>
+
+  <section class="page-content">
+    <div class="container">
+      <div class="prose">
+
+        <h2>Our Mission</h2>
+        <p>Google Drive has become the backbone of digital storage for millions of individuals and organizations. Yet as our digital lives expand, so does the invisible clutter — duplicate files accumulating across shared folders, oversized media files silently eating into storage quotas, orphaned documents left behind when parent folders are deleted, and empty directories creating a maze of abandoned hierarchy. Most users don't realize how much storage they are wasting until they receive the dreaded "Storage is full" notification.</p>
+        <p>Drive Purge was built to solve this problem once and for all. Our mission is to give every Google Drive user — from individual freelancers to enterprise IT teams — the tools to understand exactly what is consuming their storage, identify files that can be safely removed, and execute cleanup operations with confidence. We believe that storage management should be intelligent, transparent, and above all, safe.</p>
+        <p>Unlike cloud-based alternatives that require you to grant third-party servers access to your files, Drive Purge runs entirely on your local machine. We fundamentally believe that your files are your business. Our application communicates only with Google's official Drive API — no intermediary servers, no analytics endpoints, no telemetry. This local-first architecture isn't just a feature; it's a core design principle that shapes every engineering decision we make.</p>
+
+        <h2>The Technical Foundation</h2>
+        <p>Drive Purge is built on a modern, asynchronous Python stack designed for performance and reliability. At its core, the application uses <strong>FastAPI</strong> — one of the fastest Python web frameworks available — running on <strong>Uvicorn</strong>, an ASGI server built on uvloop for high-throughput async I/O. This backend serves both the API endpoints and the HTML interface to a <strong>PyWebview</strong> desktop window, creating a native-feeling application without the overhead of Electron.</p>
+        <p>The frontend communicates with the backend through a clean RESTful API architecture organized into purpose-specific route modules: authentication routes handle OAuth flow management, scan routes manage the scanning lifecycle with real-time Server-Sent Events (SSE) for progress updates, metadata routes serve application configuration and help content, license routes manage subscription validation, and UI routes render the Jinja2-templated HTML views. This modular design ensures that each concern is isolated and independently testable.</p>
+        <p>Data persistence is handled through <strong>aiosqlite</strong>, an async wrapper around SQLite that allows non-blocking database operations without sacrificing the simplicity and portability of SQLite's single-file database format. The database uses WAL (Write-Ahead Logging) mode and enforces foreign key constraints, providing both performance and data integrity. All scan results, flagged files, user preferences, and encrypted OAuth tokens are stored in a single <code>drivepurge.db</code> file in the user's home directory.</p>
+
+        <h2>Six Intelligent Scan Modes</h2>
+        <p>The heart of Drive Purge is its scanning engine, implemented in the <code>DriveScanner</code> class. When you initiate a scan, the engine executes a multi-phase analysis pipeline that first fetches all non-trashed files from your Google Drive, stores them in a temporary database table for efficient querying, and then runs up to six detection passes — each specialized for a different type of storage waste.</p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>🔍 Duplicate Detection</h3>
+            <p>Identifies duplicate files by matching on name, file size, or a combined name+size key. The engine groups files by the selected match criteria, keeps the most recently modified version, and flags all older copies for review. Each flagged file includes metadata about which file will be kept and why.</p>
+          </div>
+          <div class="info-card">
+            <h3>📦 Large File Finder</h3>
+            <p>Surfaces files exceeding a configurable size threshold (default: 10 MB). Google Workspace files (Docs, Sheets, Slides) are automatically excluded since they don't consume storage quota. Results are sorted by size in descending order for maximum impact.</p>
+          </div>
+          <div class="info-card">
+            <h3>📅 Old File Scanner</h3>
+            <p>Finds files that haven't been modified within a configurable time period (default: 90 days). Uses precise timestamp comparison against each file's last modification date. You can set thresholds of 90, 180, or 365+ days depending on your retention policy.</p>
+          </div>
+          <div class="info-card">
+            <h3>👻 Orphan Detection</h3>
+            <p>Discovers files whose parent folders have been deleted or are no longer accessible. These "ghost files" are invisible in the Drive UI but still consume quota. The engine checks every file's parent chain against the fetched folder tree and the user's root folder ID.</p>
+          </div>
+          <div class="info-card">
+            <h3>📂 Empty Folder Cleanup</h3>
+            <p>Lists all folders that contain no files or subfolders. Excludes the root folder and any folders explicitly marked in the exclusion list. Cross-references every folder ID against the parent references of all scanned files.</p>
+          </div>
+          <div class="info-card">
+            <h3>📋 All Owned Files</h3>
+            <p>An optional comprehensive mode that flags every file you own for manual review. Useful for users who want to audit their entire Drive content, export a full inventory, or make bulk decisions about file retention.</p>
+          </div>
+        </div>
+
+        <h2>How the Scan Engine Works</h2>
+        <p>The scanning process begins with the <strong>file fetch phase</strong>, where the engine paginates through the Google Drive API's <code>files.list</code> endpoint. Each page can return up to 1,000 files (configurable via <code>page_size</code> in <code>ScanConfig</code>). The engine constructs a query that excludes trashed files and optionally excludes Google Workspace MIME types. Fetched files are parsed into normalized rows and bulk-inserted into a temporary <code>scanned_files</code> table using <code>INSERT OR REPLACE</code> operations with indexed columns for efficient subsequent queries.</p>
+        <p>After fetching completes, the engine enters the <strong>analysis phase</strong>, running each enabled detection pass sequentially. Each pass queries the <code>scanned_files</code> table using optimized SQL — for example, the large file detector uses a simple <code>WHERE size_bytes >= ?</code> query against an indexed column, while the duplicate detector uses <code>GROUP BY ... HAVING COUNT(*) > 1</code> to identify file groups before fetching individual duplicates. A deduplication set (<code>already_flagged_ids</code>) ensures that files flagged by an earlier pass are not double-counted in later passes.</p>
+        <p>Throughout both phases, the engine emits progress events through a callback function, enabling the frontend to display real-time updates via Server-Sent Events. The scan can be cancelled at any time by calling the <code>cancel()</code> method, which sets an internal flag checked at the beginning of each phase and page fetch iteration. Upon completion or cancellation, the temporary <code>scanned_files</code> table is cleaned up, and final results are persisted to the <code>flagged_files</code> table with full metadata including file names, sizes, MIME types, parent folder information, flag reasons, and detailed diagnostic data.</p>
+
+        <h2>The Cleaning Engine</h2>
+        <p>Once files are flagged, the <strong>DriveCleaner</strong> class handles safe deletion. Files can be moved to Trash (reversible) or permanently deleted (irreversible), with all operations executed through the Google Drive API's <code>files.update</code> and <code>files.delete</code> endpoints. The cleaner supports both individual file operations and batch processing, where files are grouped into chunks of 10 and processed concurrently using <code>asyncio.gather</code> with configurable delays between chunks to respect rate limits.</p>
+        <p>Every operation includes automatic retry logic with exponential backoff. Rate-limit errors (HTTP 429 and certain 403 responses) trigger up to 3 retries with increasing wait times (1, 2, 4 seconds). Permission errors are caught and surfaced with descriptive messages explaining why a file could not be trashed or deleted. Files that return 404 (already deleted) are treated as successful operations. All actions are recorded in the database with timestamps, enabling the Undo feature to restore trashed files by calling <code>files.update</code> with <code>{"trashed": false}</code>.</p>
+
+        <h2>Our Commitment</h2>
+        <p>Drive Purge is not affiliated with Google Inc. Google Drive™ is a trademark of Google Inc. We are an independent software tool built by developers who experienced the pain of Google Drive clutter firsthand and decided to build a proper solution. We are committed to maintaining Drive Purge as a privacy-respecting, high-performance, and reliable tool that helps you take control of your digital storage. Every feature we build, every architecture decision we make, and every release we ship is guided by three principles: your data stays local, your actions are reversible, and your experience is seamless.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col"><h4>Product</h4><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a></div>
+        <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+        <div class="footer__col"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
+      </div>
+    </div>
+    <div class="container footer__bottom"><p>&copy; 2026 Drive Purge. All rights reserved.</p></div>
+  </footer>
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>

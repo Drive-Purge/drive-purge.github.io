@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducing Drive Purge: Reclaim Your Google Drive — Blog</title>
+  <meta name="description" content="We built Drive Purge because we were tired of running out of Google Drive storage. Here's the story behind the tool and what it can do for you.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script>(function(){var t=localStorage.getItem('dp-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+        <span>Drive<strong>Purge</strong></span>
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__dropdown"><a href="#" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">More ▾</a><ul class="nav__dropdown-menu"><li><a href="security.html">Security</a></li><li><a href="privacy.html">Privacy</a></li></ul></li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"></div>
+    <div class="container">
+      <div class="blog-post__header">
+        <span class="section-tag">Product Update</span>
+        <h1>Introducing Drive Purge: <span class="accent-text">Reclaim Your Google Drive</span></h1>
+        <p class="blog-post__meta">May 22, 2026 · 5 min read</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-content">
+    <div class="container">
+      <div class="prose">
+
+        <p>If you've ever received the dreaded "Storage is full" notification from Google, you know the feeling. Panic. Frustration. Then the inevitable scroll through thousands of files trying to figure out what's eating your 15 GB quota. We've been there — and that's exactly why we built Drive Purge.</p>
+
+        <h2>The Problem</h2>
+        <p>Google Drive is fantastic for storing and collaborating on documents. But over time, it accumulates digital clutter that's nearly invisible. Duplicate files from multiple uploads, orphaned documents whose parent folders were deleted, massive media files you forgot about, and empty directories creating a labyrinth of abandoned hierarchy.</p>
+        <p>Most users don't realize how much storage they're wasting until it's too late. And Google's built-in storage manager — while helpful — only scratches the surface. It can't detect orphaned files, doesn't find duplicates, and doesn't give you the granular control needed to make informed cleanup decisions.</p>
+
+        <h2>The Solution</h2>
+        <p>Drive Purge is a desktop application that runs entirely on your local machine. It connects to your Google Drive via OAuth 2.0, scans your entire file tree, and identifies six categories of storage waste:</p>
+        <ul>
+          <li><strong>Duplicates</strong> — files matched by name, size, or both</li>
+          <li><strong>Large files</strong> — exceeding a configurable size threshold</li>
+          <li><strong>Old files</strong> — untouched for 90, 180, or 365+ days</li>
+          <li><strong>Orphans</strong> — files with deleted parent folders</li>
+          <li><strong>Empty folders</strong> — directories containing nothing</li>
+          <li><strong>All owned files</strong> — for complete inventory audits</li>
+        </ul>
+
+        <h2>Why Local-First?</h2>
+        <p>We made a deliberate architectural choice: no cloud servers, no intermediary services, no telemetry. Drive Purge communicates only with Google's official Drive API. Your OAuth tokens are encrypted with Fernet (AES-128-CBC + HMAC-SHA256) and stored locally. Your file metadata never leaves your machine.</p>
+        <p>This isn't just a privacy feature — it's a fundamental design principle. We believe your files are your business, and we've built every part of the application around that belief.</p>
+
+        <h2>What's Next</h2>
+        <p>We're just getting started. Upcoming features include scheduled scans, advanced duplicate detection with content hashing, integration with Google Workspace admin APIs for enterprise users, and a detailed storage analytics dashboard. Stay tuned by checking back on this blog.</p>
+
+        <p style="margin-top:40px"><a href="download.html" class="btn btn--primary">Download Drive Purge</a> <a href="blog.html" class="btn btn--ghost" style="margin-left:12px">← Back to Blog</a></p>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpeg" alt="Drive Purge" class="nav__logo-icon">
+          <span>Drive<strong>Purge</strong></span>
+        </a>
+        <p>Intelligent Google Drive cleanup and organization tool.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col"><h4>Product</h4><a href="index.html#features">Features</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a></div>
+        <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+        <div class="footer__col"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
+      </div>
+    </div>
+    <div class="container footer__bottom"><p>&copy; 2026 Drive Purge. All rights reserved.</p></div>
+  </footer>
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>
